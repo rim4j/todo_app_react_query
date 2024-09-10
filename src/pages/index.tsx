@@ -1,11 +1,11 @@
 import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
 import { nanoid } from "nanoid";
 
 import { useTheme } from "@/hooks/use-theme";
 import "./index.css";
 import Items from "@/components/Items";
 import { MoonFilledIcon, NextUILogo, SunFilledIcon } from "@/components/icons";
+import Form from "@/components/Form";
 
 const IndexPage = () => {
   const { theme, toggleTheme, isDark } = useTheme();
@@ -31,18 +31,8 @@ const IndexPage = () => {
         <header>
           <h1 className="text-xl mb-5">Task Bud</h1>
         </header>
-        <div className="flex justify-center  h-15 mb-8">
-          <Input
-            className="max-w-[320px]"
-            label="Add task"
-            radius="full"
-            type="text"
-            variant="underlined"
-          />
-          <Button className="card_btn h-15 ml-5 px-10" color="primary">
-            Add Task
-          </Button>
-        </div>
+        <Form />
+
         <div className="task">
           <Items tasks={defaultItems} />
         </div>
