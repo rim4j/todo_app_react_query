@@ -31,8 +31,10 @@ const IndexPage = () => {
         <header>
           <h1 className="text-xl mb-5">Task Bud</h1>
         </header>
+        {/* form */}
         <Form />
 
+        {/* items */}
         <div className="task">
           <Items tasks={defaultItems} />
         </div>
