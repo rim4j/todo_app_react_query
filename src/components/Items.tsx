@@ -1,20 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
+import { Spinner } from "@nextui-org/spinner";
 
 import SingleItem from "./SingleItem";
 
 import customFetch from "@/utils/utils";
 
 const Items = ({ tasks }: any) => {
-  const result = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["tasks"],
-    queryFn: () => customFetch.get("/"),
+    queryFn: async () => {
+      const { data } = await customFetch.get("/");
+
+      return data.taskList;
+    },
   });
 
-  console.log(result.data);
+  if (isLoading)
+    return (
+      <div className="text-center">
+        <Spinner />
+      </div>
+    );
 
   return (
     <div>
-      {tasks.map((item: any) => (
+      {data.map((item: any) => (
         <SingleItem key={item.id} singleItem={item} />
       ))}
     </div>
