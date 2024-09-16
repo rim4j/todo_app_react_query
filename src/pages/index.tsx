@@ -1,24 +1,19 @@
 import { Button } from "@nextui-org/button";
-import { nanoid } from "nanoid";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import { useTheme } from "@/hooks/use-theme";
-import "./index.css";
+import Form from "@/components/Form";
 import Items from "@/components/Items";
 import { MoonFilledIcon, NextUILogo, SunFilledIcon } from "@/components/icons";
-import Form from "@/components/Form";
+import { useTheme } from "@/hooks/use-theme";
+import "./index.css";
 
 const IndexPage = () => {
   const { theme, toggleTheme, isDark } = useTheme();
 
-  const defaultItems = [
-    { id: nanoid(), title: "walk the dog", isDone: false },
-    { id: nanoid(), title: "wash dishes", isDone: false },
-    { id: nanoid(), title: "drink coffee", isDone: true },
-    { id: nanoid(), title: "take a nap", isDone: false },
-  ];
-
   return (
     <div className={theme}>
+      <ToastContainer />
       <div className="m-5 ">
         <nav className="flex ">
           <NextUILogo className="mr-5" />
@@ -36,7 +31,7 @@ const IndexPage = () => {
 
         {/* items */}
         <div className="task">
-          <Items tasks={defaultItems} />
+          <Items />
         </div>
       </div>
     </div>

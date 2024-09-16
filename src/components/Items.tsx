@@ -5,8 +5,8 @@ import SingleItem from "./SingleItem";
 
 import customFetch from "@/utils/utils";
 
-const Items = ({ tasks }: any) => {
-  const { isLoading, data } = useQuery({
+const Items = () => {
+  const { isLoading, data, error, isError } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
       const { data } = await customFetch.get("/");
@@ -14,6 +14,13 @@ const Items = ({ tasks }: any) => {
       return data.taskList;
     },
   });
+
+  if (isError)
+    return (
+      <div className="text-center">
+        <p>{error.message}</p>
+      </div>
+    );
 
   if (isLoading)
     return (
