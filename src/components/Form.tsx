@@ -1,30 +1,21 @@
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { toast } from "react-toastify";
 
-import customFetch from "@/utils/utils";
+import { useCreateTasks } from "@/hooks/reactQueryCustomHook";
 
 const Form = () => {
   const [newItemName, setNewItemName] = useState("");
-  const queryClient = useQueryClient();
-  const { mutate: createTask, isPending } = useMutation({
-    mutationFn: (taskTitle: string) =>
-      customFetch.post("/", { title: taskTitle }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
-      toast.success("task added successfully");
-      setNewItemName("");
-    },
-    onError: (e: any) => {
-      toast.error(e.response.data.msg);
-    },
-  });
+
+  const { createTask } = useCreateTasks();
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    createTask(newItemName);
+    createTask(newItemName, {
+      onSuccess: () => {
+        setNewItemName("");
+      },
+    });
   };
 
   return (
@@ -42,7 +33,7 @@ const Form = () => {
         <Button
           className="card_btn h-15 ml-5 px-10"
           color="primary"
-          disabled={isPending}
+          // disabled={isPending}
           type="submit"
         >
           Add Task

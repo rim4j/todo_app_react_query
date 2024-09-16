@@ -1,19 +1,11 @@
 import { Checkbox } from "@nextui-org/checkbox";
 import { Button } from "@nextui-org/button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import customFetch from "@/utils/utils";
+import { useDeleteTasks, useEditTasks } from "@/hooks/reactQueryCustomHook";
 
 const SingleItem = ({ singleItem }: any) => {
-  const queryClient = useQueryClient();
-  const { mutate: editTask } = useMutation({
-    mutationFn: ({ taskId, isDone }: any) => {
-      return customFetch.patch(`/${taskId}`, { isDone });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
-    },
-  });
+  const { editTask } = useEditTasks();
+  const { deleteTask } = useDeleteTasks();
 
   return (
     <div className="flex justify-between mx-3 my-5">
@@ -28,7 +20,10 @@ const SingleItem = ({ singleItem }: any) => {
           <p>{singleItem.title}</p>
         </Checkbox>
       </div>
-      <Button color="danger" onClick={() => console.log("delete")}>
+      <Button
+        color="danger"
+        onClick={() => deleteTask({ taskId: singleItem.id })}
+      >
         Delete
       </Button>
     </div>

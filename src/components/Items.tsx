@@ -1,24 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
 import { Spinner } from "@nextui-org/spinner";
 
 import SingleItem from "./SingleItem";
 
-import customFetch from "@/utils/utils";
+import { useFetchTasks } from "@/hooks/reactQueryCustomHook";
 
 const Items = () => {
-  const { isLoading, data, error, isError } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: async () => {
-      const { data } = await customFetch.get("/");
-
-      return data.taskList;
-    },
-  });
+  const { data, isError, isLoading, error } = useFetchTasks();
 
   if (isError)
     return (
       <div className="text-center">
-        <p>{error.message}</p>
+        <p>{error!.message}</p>
       </div>
     );
 
